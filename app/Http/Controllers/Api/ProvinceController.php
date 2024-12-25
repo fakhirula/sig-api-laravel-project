@@ -14,8 +14,13 @@ class ProvinceController extends Controller
      */
     public function index()
     {
-        $provinces = Province::all();
-        return new ProvinceResource(true, 'Get .', $provinces);
+      $provinces = Province::all();
+
+      if ($provinces->isEmpty()) {
+        return new ProvinceResource(false, 'No provinces found.', []);
+      }
+
+      return new ProvinceResource(true, 'Provinces fetched successfully.', $provinces);
     }
 
     /**
@@ -31,8 +36,7 @@ class ProvinceController extends Controller
      */
     public function store(Request $request)
     {
-      $provinces = '';
-      return new ProvinceResource(true, 'Province created successfully.', $provinces);
+      
     }
 
     /**
@@ -40,8 +44,13 @@ class ProvinceController extends Controller
      */
     public function show(string $id)
     {
-      $provinces = '';
-      return new ProvinceResource(true, 'Get .', $provinces);
+      $province = Province::find($id);
+      
+      if (!$province) {
+        return new ProvinceResource(false, 'No province found.', []);
+      }
+
+      return new ProvinceResource(true, 'Province fetched successfully.', $province);
     }
 
     /**
@@ -57,8 +66,7 @@ class ProvinceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-      $provinces = '';
-      return new ProvinceResource(true, 'Province updated successfully.', $provinces);
+      
     }
 
     /**
@@ -66,7 +74,6 @@ class ProvinceController extends Controller
      */
     public function destroy(string $id)
     {
-      $provinces = '';
-      return new ProvinceResource(true, 'Province deleted successfully.', $provinces);
+      
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\VillageResource;
+use App\Models\Village;
 use Illuminate\Http\Request;
 
 class VillageController extends Controller
@@ -12,7 +14,13 @@ class VillageController extends Controller
      */
     public function index()
     {
-        //
+      $villages = Village::all();
+
+      if ($villages->isEmpty()) {
+        return new VillageResource(false, 'No villages found.', []);
+      }
+
+      return new VillageResource(true, 'Villages fetched successfully.', $villages);
     }
 
     /**
@@ -36,7 +44,13 @@ class VillageController extends Controller
      */
     public function show(string $id)
     {
-        //
+      $village = Village::find($id);
+      
+      if (!$village) {
+        return new VillageResource(false, 'No village found.', []);
+      }
+
+      return new VillageResource(true, 'Village fetched successfully.', $village);
     }
 
     /**

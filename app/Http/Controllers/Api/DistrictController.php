@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DistrictResource;
+use App\Http\Resources\ProvinceResource;
+use App\Models\District;
 use Illuminate\Http\Request;
 
-class DictrictController extends Controller
+class DistrictController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+      $districts = District::all();
+
+      if ($districts->isEmpty()) {
+        return new DistrictResource(false, 'No districts found.', []);
+      }
+
+      return new DistrictResource(true, 'Districts fetched successfully.', $districts);
     }
 
     /**
@@ -36,7 +45,13 @@ class DictrictController extends Controller
      */
     public function show(string $id)
     {
-        //
+      $district = District::find($id);
+
+      if (!$district) {
+        return new ProvinceResource(false, 'No district found.', []);
+      }
+
+      return new ProvinceResource(true, 'District fetched successfully.', $district);
     }
 
     /**
