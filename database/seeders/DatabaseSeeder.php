@@ -36,5 +36,10 @@ class DatabaseSeeder extends Seeder
       $path = 'database_sql/villages.sql';
       DB::unprepared(file_get_contents($path));
       $this->command->info('Villages table seeded!');
+
+      $this->call([
+        StatisticSeeder::class,
+        AgriculturalSeeder::class
+      ]);
     }
 }
